@@ -647,9 +647,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 7
-  dashSpeed: 0
-  dashTime: 0
-  jumpForce: 1
+  dashSpeed: 12
+  dashTime: 0.2
+  jumpForce: 1.2
   groundCheckDistance: 0.55
   groundLayerMask:
     serializedVersion: 2
