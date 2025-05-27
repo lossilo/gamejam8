@@ -55,6 +55,7 @@ public class Sword : MonoBehaviour
         playerMovement.MoveBlock = false;
         isMovingSword = false;
         swordCollider.enabled = false;
+        transform.localPosition = Vector3.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

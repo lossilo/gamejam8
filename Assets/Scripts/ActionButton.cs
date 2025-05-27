@@ -21,17 +21,28 @@ public class ActionButton : MonoBehaviour
     {
         if (MouseIsTouching())
         {
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetMouseButtonDown(0))
             {
                 buttonImage.sprite = pressedButtonSprite;
             }
-            if (Input.GetMouseButtonUp(0) || Input.GetKeyUp(KeyCode.Space))
+            if (Input.GetMouseButtonUp(0))
             {
                 buttonImage.sprite = normalButtonSprite;
                 CallAbility();
             }
         }
-        else
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            buttonImage.sprite = pressedButtonSprite;
+            CallAbility();
+        }
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            buttonImage.sprite = normalButtonSprite;
+        }
+
+        if (!MouseIsTouching() && !Input.GetKey(KeyCode.Space))
         {
             buttonImage.sprite = normalButtonSprite;
         }

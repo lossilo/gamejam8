@@ -16,14 +16,6 @@ public class PlayerAbilities : MonoBehaviour
         playerTools = GetComponent<PlayerTools>();
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UseAbility();
-        }
-    }
-
     public void ChangeAbility()
     {
         currentAbility++;
@@ -52,8 +44,6 @@ public class PlayerAbilities : MonoBehaviour
             case Abilities.Sword:
                 playerTools.SwordAttack();
                 break;
-            case Abilities.WallBreak:
-                break;
         }
     }
 
@@ -63,7 +53,6 @@ public class PlayerAbilities : MonoBehaviour
         Dash,
         GroundPound,
         Sword,
-        WallBreak,
         Total
     }
 }
