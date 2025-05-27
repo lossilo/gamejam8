@@ -5,6 +5,10 @@ using UnityEngine.Rendering;
 
 public class Sword : MonoBehaviour
 {
+    [SerializeField] int damageToEnemy;
+
+    [Space]
+
     [SerializeField] private float swordMoveDistance;
     [SerializeField] private float swordAttackTime;
     [SerializeField] private float swordRetractTime;
@@ -62,7 +66,7 @@ public class Sword : MonoBehaviour
     {
         if (((1 << other.gameObject.layer) & attackableLayer) != 0)
         {
-            Debug.Log("Kapow");
+            other.GetComponent<Enemy>().Damage(damageToEnemy);
         }
     }
 }

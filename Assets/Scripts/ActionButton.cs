@@ -24,11 +24,11 @@ public class ActionButton : MonoBehaviour
             if (Input.GetMouseButtonDown(0))
             {
                 buttonImage.sprite = pressedButtonSprite;
+                CallAbility();
             }
             if (Input.GetMouseButtonUp(0))
             {
                 buttonImage.sprite = normalButtonSprite;
-                CallAbility();
             }
         }
 

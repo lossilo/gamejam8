@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class EnemyScript : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
 
     [Header("Enemy Stats")]
@@ -86,12 +86,10 @@ public class EnemyScript : MonoBehaviour
         {
             if (newPatrolPos.x > enemyPos.x)
             {
-                transform.localEulerAngles = new Vector3(0, 0, 0);
                 enemyRb.linearVelocityX = enemySpeed;
             }
             if (newPatrolPos.x < enemyPos.x)
             {
-                transform.localEulerAngles = new Vector3(0, 180, 0);
                 enemyRb.linearVelocityX = -enemySpeed;
             }
         }
@@ -108,10 +106,11 @@ public class EnemyScript : MonoBehaviour
         //playerScript.health = playerScript.health - enemyDamage;
     }
 
-    public void Test(int test)
+    public void Damage(int damage)
     {
-        StartCoroutine(DamageEnemy(test));
+        StartCoroutine(DamageEnemy(damage));
     }
+
     public IEnumerator DamageEnemy(int damageTaken)
     {
         enemyHealth = enemyHealth - damageTaken;

@@ -16,6 +16,9 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Ground Pound")]
     [SerializeField] private float groundPoundStrength;
+    [SerializeField] private float groundPoundCheckLength;
+    [SerializeField] private LayerMask enemyLayers;
+    [SerializeField] private int damageToEnemies;
 
     private bool moveBlock;
     private float currentMovementSpeed;
@@ -158,13 +161,40 @@ public class PlayerMovement : MonoBehaviour
 
         if (GroundCheck())
         {
-            Debug.Log("Kaboom");
+            CheckGroundPound();
             groundPounding = false;
         }
     }
 
+    private void CheckGroundPound()
+    {
+        RaycastHit2D hitLeft;
+        RaycastHit2D hitRight;
+
+        hitLeft = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (transform.localScale.y / 4)), Vector2.left, groundPoundCheckLength, enemyLayers);
+        hitRight = Physics2D.Raycast(new Vector2(transform.position.x, transform.position.y - (transform.localScale.y / 4)), Vector2.right, groundPoundCheckLength, enemyLayers);
+
+        if (hitLeft.collider != null)
+        {
+            if (hitLeft.collider.TryGetComponent(out Enemy leftEnemy))
+            {
+                leftEnemy.Damage(damageToEnemies);
+            }
+        }
+
+        if (hitRight.collider != null)
+        {
+            if (hitRight.collider.TryGetComponent(out Enemy rightEnemy))
+            {
+                rightEnemy.Damage(damageToEnemies);
+            }
+        }       
+    }
+
     private void OnDrawGizmosSelected()
     {
+        // Ground Check Gizmos
+
         Gizmos.color = Color.cyan;
 
         Vector2 playerLeftPosition = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y);
@@ -175,5 +205,14 @@ public class PlayerMovement : MonoBehaviour
 
         Gizmos.DrawLine(playerLeftPosition, groundPosLeft);
         Gizmos.DrawLine(playerRightPosition, groundPosRight);
+
+        // Ground Pound Gizmos
+
+        Gizmos.color = Color.green;
+
+        Vector2 leftPosition = new Vector2(transform.position.x - groundPoundCheckLength, transform.position.y - (transform.localScale.y / 4));
+        Vector2 rightPosition = new Vector2(transform.position.x + groundPoundCheckLength, transform.position.y - (transform.localScale.y / 4));
+
+        Gizmos.DrawLine(leftPosition, rightPosition);
     }
 }
