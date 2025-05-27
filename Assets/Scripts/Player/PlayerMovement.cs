@@ -44,6 +44,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void Movement()
     {
+        if (moveBlock)
+        {
+            playerRigidbody.linearVelocity = new Vector2(0, playerRigidbody.linearVelocity.y);
+            return;
+        }
+
         float inputFloat;
 
         if (currentMovementSpeed == dashSpeed)

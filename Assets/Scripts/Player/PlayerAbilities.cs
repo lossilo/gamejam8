@@ -8,10 +8,12 @@ public class PlayerAbilities : MonoBehaviour
     private Abilities currentAbility;
 
     private PlayerMovement playerMovement;
+    private PlayerTools playerTools;
 
     private void Start()
     {
-        playerMovement = FindFirstObjectByType<PlayerMovement>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerTools = GetComponent<PlayerTools>();
     }
 
     private void Update()
@@ -48,6 +50,7 @@ public class PlayerAbilities : MonoBehaviour
                 playerMovement.GroundPound();
                 break;
             case Abilities.Sword:
+                playerTools.SwordAttack();
                 break;
             case Abilities.WallBreak:
                 break;
