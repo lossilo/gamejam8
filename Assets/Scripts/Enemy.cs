@@ -1,45 +1,44 @@
 using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
 
 public class EnemyScript : MonoBehaviour
 {
 
     [Header("Enemy Stats")]
     [SerializeField] float enemySpeed;
+    [SerializeField] int enemyDamage;
+    [SerializeField] int enemyHealth;
 
     [Header("Patrol")]
-    [SerializeField] Vector2 enemyPos;
-    [SerializeField] Transform patrolPoint;
+    [SerializeField] private Transform patrolPoint;
     [SerializeField] int patrolAmount;
+    private Vector2 newPatrolPos;
+    private Vector2 enemyPos;
+    private bool patrolled = false;
+    private bool stop = false;
 
     [Header("Other")]
+    //[SerializeField] PlayerScript playerScript;
+    [SerializeField] GameObject enemyHolder;
     [SerializeField] Rigidbody2D enemyRb;
 
-    [Header("Temp Debug")]
-    [SerializeField] Vector2 newPatrolPos;
-    [SerializeField] bool facingRight = true;
-    [SerializeField] bool patrolled = false;
-    [SerializeField] bool stop = false;
-
-    private void Update()
-    {
-        EnemyMove();
-    }
 
     private void Awake()
     {
         Patrol();
     }
-
-    public void Patrol()
+    private void Update()
+    {
+        EnemyMove();
+    }
+    void Patrol()
     {
         stop = false;
 
-        if(patrolled == false)
+        if (patrolled == false)
         {
             newPatrolPos.x = transform.position.x + patrolAmount;
         }
-        if(patrolled == true)
+        if (patrolled == true)
         {
             newPatrolPos.x = transform.position.x - patrolAmount;
         }
@@ -48,20 +47,28 @@ public class EnemyScript : MonoBehaviour
 
         newPatrolPos.y = transform.position.y;
         patrolPoint.position = newPatrolPos;
-
-
-        enemyPos = (Vector2)transform.position;
-
-
-        if (newPatrolPos.x > enemyPos.x)
-        {
-            stop = true;
-            ArrivedToPatrolPos();
-        }
     }
     void EnemyMove()
     {
         enemyPos = (Vector2)transform.position;
+
+
+        if (patrolled == false)
+        {
+            if (newPatrolPos.x > transform.position.x)
+            {
+                stop = true;
+                Patrol();
+            }
+        }
+        if (patrolled == true)
+        {
+            if (newPatrolPos.x < transform.position.x)
+            {
+                stop = true;
+                Patrol();
+            }
+        }
 
         if (stop == true)
         {
@@ -73,21 +80,33 @@ public class EnemyScript : MonoBehaviour
             if (newPatrolPos.x > enemyPos.x)
             {
                 transform.localEulerAngles = new Vector3(0, 0, 0);
-                facingRight = true;
                 enemyRb.linearVelocityX = enemySpeed;
             }
             if (newPatrolPos.x < enemyPos.x)
             {
                 transform.localEulerAngles = new Vector3(0, 180, 0);
-                facingRight = false;
                 enemyRb.linearVelocityX = -enemySpeed;
             }
         }
     }
-
-    void ArrivedToPatrolPos()
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        Debug.Log("Patrolled");
-        Patrol();
+        if (other.gameObject.CompareTag("Player"))
+        {
+            DamagePlayer();
+        }
+    }
+    void DamagePlayer()
+    {
+        //playerScript.health = playerScript.health - enemyDamage;
+    }
+    public void DamageEnemy(int damageTaken)
+    {
+        enemyHealth = enemyHealth - damageTaken;
+
+        if (enemyHealth <= 0)
+        {
+            Destroy(enemyHolder);
+        }
     }
 }
