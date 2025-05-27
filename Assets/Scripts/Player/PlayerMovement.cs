@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask groundLayerMask;
 
     [Header("Ground Pound")]
-    [SerializeField] float groundPoundStrength;
+    [SerializeField] private float groundPoundStrength;
 
     private bool moveBlock;
     private float currentMovementSpeed;
@@ -23,14 +23,15 @@ public class PlayerMovement : MonoBehaviour
     private bool hasJumped;
     private bool groundPounding;
 
-
     private Rigidbody2D playerRigidbody;
+    private Animator playerAnimator;
 
     public bool MoveBlock { get { return moveBlock; } set { moveBlock = value; } }
 
     private void Start()
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<Animator>();
 
         currentMovementSpeed = movementSpeed;
     }
@@ -47,6 +48,7 @@ public class PlayerMovement : MonoBehaviour
         if (moveBlock)
         {
             playerRigidbody.linearVelocity = new Vector2(0, playerRigidbody.linearVelocity.y);
+            playerAnimator.SetBool("IsWalking", false);
             return;
         }
 
@@ -64,10 +66,12 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(inputFloat) > Mathf.Epsilon)
         {
             playerRigidbody.linearVelocity = new Vector2(inputFloat * currentMovementSpeed, playerRigidbody.linearVelocity.y);
+            playerAnimator.SetBool("IsWalking", true);
         }
         else
         {
             playerRigidbody.linearVelocity = new Vector2(0, playerRigidbody.linearVelocity.y);
+            playerAnimator.SetBool("IsWalking", false);
         }
 
         if (Mathf.Abs(playerRigidbody.linearVelocity.x) > Mathf.Epsilon)
@@ -81,6 +85,7 @@ public class PlayerMovement : MonoBehaviour
         if (!moveBlock && (GroundCheck() || currentCoyoteTime > 0) && !hasJumped)
         {
             playerRigidbody.AddForce(new Vector2(0, jumpForce * 1000));
+            playerAnimator.SetBool("IsJumping", true);
             hasJumped = true;
         }
     }
@@ -90,6 +95,10 @@ public class PlayerMovement : MonoBehaviour
         if (!(currentCoyoteTime < coyoteTime * coyoteTimeBufferMultiplier && currentCoyoteTime > -1) && hasJumped)
         {
             hasJumped = !GroundCheck();
+            if (GroundCheck())
+            {
+                playerAnimator.SetBool("IsJumping", false);
+            }
         }
 
         if (hasJumped)
