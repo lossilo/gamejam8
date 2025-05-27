@@ -1,19 +1,22 @@
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI tempAbilityDisplay;
-
     private Abilities currentAbility;
 
     private PlayerMovement playerMovement;
     private PlayerTools playerTools;
+    private AbilityDisplay abilityDisplay;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerTools = GetComponent<PlayerTools>();
+        abilityDisplay = FindFirstObjectByType<AbilityDisplay>();
+
+        abilityDisplay.ChangeAbility(0);
     }
 
     public void ChangeAbility()
@@ -24,8 +27,7 @@ public class PlayerAbilities : MonoBehaviour
         {
             currentAbility = 0;
         }
-
-        tempAbilityDisplay.text = "Current Ability: " + currentAbility;
+        abilityDisplay.ChangeAbility((int)currentAbility);
     }
 
     public void UseAbility()
