@@ -460,9 +460,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096f389da320b134a8a4dd27b72dc668, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mouseFollower: {fileID: 0}
   normalButtonSprite: {fileID: 21300000, guid: 25fc7f003031fdc489e79ec2b1eecb26, type: 3}
   pressedButtonSprite: {fileID: 21300000, guid: c73292033421cba47b0d499999be2bf1, type: 3}
-  clickAction:
-    m_PersistentCalls:
-      m_Calls: []
