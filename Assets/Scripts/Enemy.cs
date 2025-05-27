@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
@@ -15,6 +16,12 @@ public class EnemyScript : MonoBehaviour
     private Vector2 enemyPos;
     private bool patrolled = false;
     private bool stop = false;
+
+    [Header("Knockback")]
+    [SerializeField] float knockBack;
+    [SerializeField] float knockBackMultiplier;
+    [SerializeField] float knockBackDuration;
+    [SerializeField] bool gettingKnocked;
 
     [Header("Other")]
     //[SerializeField] PlayerScript playerScript;
@@ -70,7 +77,7 @@ public class EnemyScript : MonoBehaviour
             }
         }
 
-        if (stop == true)
+        if (stop == true && gettingKnocked == false)
         {
             enemyRb.linearVelocityX = 0;
         }
@@ -100,9 +107,31 @@ public class EnemyScript : MonoBehaviour
     {
         //playerScript.health = playerScript.health - enemyDamage;
     }
-    public void DamageEnemy(int damageTaken)
+
+    public void Test(int test)
+    {
+        StartCoroutine(DamageEnemy(test));
+    }
+    public IEnumerator DamageEnemy(int damageTaken)
     {
         enemyHealth = enemyHealth - damageTaken;
+
+        gettingKnocked = true;
+        stop = true;
+        enemyRb.linearVelocityY = knockBack * knockBackMultiplier;
+
+        if(patrolled == true)
+        {
+            enemyRb.linearVelocityX = -knockBack;
+        }
+        if (patrolled == false)
+        {
+            enemyRb.linearVelocityX = knockBack;
+        }
+
+        yield return new WaitForSeconds(knockBackDuration);
+        gettingKnocked = false;
+        stop = false;
 
         if (enemyHealth <= 0)
         {
