@@ -10,10 +10,19 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jumping")]
     [SerializeField] private float jumpForce;
     [SerializeField] private float groundCheckDistance;
+    [SerializeField] private float coyoteTime;
+    [Tooltip("Must be a value between 0 and 1")] [SerializeField] private float coyoteTimeBufferMultiplier;
     [SerializeField] private LayerMask groundLayerMask;
+
+    [Header("Ground Pound")]
+    [SerializeField] float groundPoundStrength;
 
     private bool moveBlock;
     private float currentMovementSpeed;
+    private float currentCoyoteTime;
+    private bool hasJumped;
+    private bool groundPounding;
+
 
     private Rigidbody2D playerRigidbody;
 
@@ -26,12 +35,14 @@ public class PlayerMovement : MonoBehaviour
         currentMovementSpeed = movementSpeed;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         Movement();
+        SetCoyoteTime();
+        PerformGroundPound();
     }
 
-    void Movement()
+    private void Movement()
     {
         float inputFloat;
 
@@ -61,22 +72,46 @@ public class PlayerMovement : MonoBehaviour
 
     public void Jump()
     {
-        if (!moveBlock && GroundCheck())
+        if (!moveBlock && (GroundCheck() || currentCoyoteTime > 0) && !hasJumped)
         {
             playerRigidbody.AddForce(new Vector2(0, jumpForce * 1000));
+            hasJumped = true;
         }
     }
 
-    bool GroundCheck()
+    private void SetCoyoteTime()
     {
-        if (Physics2D.Raycast(transform.position, -transform.up, groundCheckDistance, groundLayerMask))
+        if (!(currentCoyoteTime < coyoteTime * coyoteTimeBufferMultiplier && currentCoyoteTime > -1) && hasJumped)
         {
-            return true;
+            hasJumped = !GroundCheck();
         }
-        else
+
+        if (hasJumped)
         {
-            return false;
+            currentCoyoteTime = -1f;
+            return;
+        }      
+
+        if (GroundCheck() && !hasJumped)
+        {
+            currentCoyoteTime = coyoteTime;
         }
+        else if (currentCoyoteTime > 0)
+        {
+            currentCoyoteTime -= Time.fixedDeltaTime;
+        }
+    }
+
+    private bool GroundCheck()
+    {
+        Vector2 leftPosition = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y);
+        Vector2 rightPosition = new Vector2(transform.position.x + (transform.localScale.x / 2), transform.position.y);
+
+        bool groundHit;
+
+        groundHit = Physics2D.Raycast(leftPosition, -transform.up, groundCheckDistance, groundLayerMask) || Physics2D.Raycast(rightPosition, -transform.up, groundCheckDistance, groundLayerMask);
+
+        return groundHit;
     }
 
     public void Dash()
@@ -84,7 +119,7 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(DashRoutine());
     }
 
-    IEnumerator DashRoutine()
+    private IEnumerator DashRoutine()
     {
         currentMovementSpeed = dashSpeed;
 
@@ -93,10 +128,37 @@ public class PlayerMovement : MonoBehaviour
         currentMovementSpeed = movementSpeed;
     }
 
+    public void GroundPound()
+    {
+        if (!GroundCheck())
+        {
+            groundPounding = true;
+            playerRigidbody.AddForce(new Vector2(0, -groundPoundStrength * 1000));
+        }
+    }
+
+    private void PerformGroundPound()
+    {
+        if (!groundPounding) { return; }
+
+        if (GroundCheck())
+        {
+            Debug.Log("Kaboom");
+            groundPounding = false;
+        }
+    }
+
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.cyan;
-        Vector3 groundPos = new Vector3(transform.position.x, transform.position.y - groundCheckDistance, transform.position.z);
-        Gizmos.DrawLine(transform.position, groundPos);
+
+        Vector2 playerLeftPosition = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y);
+        Vector2 playerRightPosition = new Vector2(transform.position.x + (transform.localScale.x / 2), transform.position.y);
+
+        Vector2 groundPosLeft = new Vector2(transform.position.x - (transform.localScale.x / 2), transform.position.y - groundCheckDistance);
+        Vector2 groundPosRight = new Vector2(transform.position.x + (transform.localScale.x / 2), transform.position.y - groundCheckDistance);
+
+        Gizmos.DrawLine(playerLeftPosition, groundPosLeft);
+        Gizmos.DrawLine(playerRightPosition, groundPosRight);
     }
 }

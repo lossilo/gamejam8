@@ -45,6 +45,7 @@ public class PlayerAbilities : MonoBehaviour
                 playerMovement.Dash();
                 break;
             case Abilities.GroundPound:
+                playerMovement.GroundPound();
                 break;
             case Abilities.Sword:
                 break;
