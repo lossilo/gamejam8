@@ -140,10 +140,13 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DashRoutine()
     {
         currentMovementSpeed = dashSpeed;
+        playerAnimator.SetBool("IsDashing", true);
 
         yield return new WaitForSeconds(dashTime);
 
         currentMovementSpeed = movementSpeed;
+        playerAnimator.SetBool("IsDashing", false);
+
     }
 
     public void GroundPound()
@@ -151,7 +154,7 @@ public class PlayerMovement : MonoBehaviour
         if (!GroundCheck())
         {
             groundPounding = true;
-            playerRigidbody.AddForce(new Vector2(0, -groundPoundStrength * 1000));
+            playerRigidbody.AddForce(new Vector2(0, -groundPoundStrength * 1000));          
         }
     }
 
@@ -161,9 +164,18 @@ public class PlayerMovement : MonoBehaviour
 
         if (GroundCheck())
         {
+            playerAnimator.SetBool("IsGroundPounding", true);
             CheckGroundPound();
             groundPounding = false;
+            StartCoroutine(WaitWithAnimationTurnoffRoutine());
         }
+    }
+
+    private IEnumerator WaitWithAnimationTurnoffRoutine()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        playerAnimator.SetBool("IsGroundPounding", false);
     }
 
     private void CheckGroundPound()
