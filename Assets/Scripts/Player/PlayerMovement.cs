@@ -20,14 +20,23 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private LayerMask enemyLayers;
     [SerializeField] private int damageToEnemies;
 
+    [Header("Sound Effects")]
+    [SerializeField] private AudioClip moveSound;
+    [SerializeField] private AudioClip jumpSound;
+    [SerializeField] private AudioClip dashSound;
+
     private bool moveBlock;
     private float currentMovementSpeed;
     private float currentCoyoteTime;
     private bool hasJumped;
+    private bool canReCheckJump;
     private bool groundPounding;
+    private bool startedMoving;
+    private bool isMoving;
 
     private Rigidbody2D playerRigidbody;
     private Animator playerAnimator;
+    private SoundEffectManager soundEffectManager;
 
     public bool MoveBlock { get { return moveBlock; } set { moveBlock = value; } }
 
@@ -35,6 +44,7 @@ public class PlayerMovement : MonoBehaviour
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerAnimator = GetComponent<Animator>();
+        soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
 
         currentMovementSpeed = movementSpeed;
     }
@@ -69,11 +79,13 @@ public class PlayerMovement : MonoBehaviour
         if (Mathf.Abs(inputFloat) > Mathf.Epsilon)
         {
             playerRigidbody.linearVelocity = new Vector2(inputFloat * currentMovementSpeed, playerRigidbody.linearVelocity.y);
+            startedMoving = true;
             playerAnimator.SetBool("IsWalking", true);
         }
         else
         {
             playerRigidbody.linearVelocity = new Vector2(0, playerRigidbody.linearVelocity.y);
+            startedMoving = false;
             playerAnimator.SetBool("IsWalking", false);
         }
 
@@ -81,6 +93,20 @@ public class PlayerMovement : MonoBehaviour
         {
             transform.localScale = new Vector2(Mathf.Sign(playerRigidbody.linearVelocity.x), transform.localScale.y);
         }
+
+        if (startedMoving != isMoving)
+        {
+            if (startedMoving)
+            {
+                soundEffectManager.PlaySound(moveSound, true);
+            }
+            else
+            {
+                soundEffectManager.StopSound(moveSound);
+            }
+        }
+
+        isMoving = startedMoving;
     }
 
     public void Jump()
@@ -90,17 +116,25 @@ public class PlayerMovement : MonoBehaviour
             playerRigidbody.AddForce(new Vector2(0, jumpForce * 1000));
             playerAnimator.SetBool("IsJumping", true);
             hasJumped = true;
+            soundEffectManager.PlaySound(jumpSound);
+            Invoke("EnableReCheck", 0.2f);
         }
+    }
+
+    private void EnableReCheck()
+    {
+        canReCheckJump = true;
     }
 
     private void SetCoyoteTime()
     {
-        if (!(currentCoyoteTime < coyoteTime * coyoteTimeBufferMultiplier && currentCoyoteTime > -1) && hasJumped)
+        if (!(currentCoyoteTime < coyoteTime * coyoteTimeBufferMultiplier && currentCoyoteTime > -1) && hasJumped && canReCheckJump)
         {
             hasJumped = !GroundCheck();
             if (GroundCheck())
             {
                 playerAnimator.SetBool("IsJumping", false);
+                canReCheckJump = false;
             }
         }
 
@@ -140,6 +174,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator DashRoutine()
     {
         currentMovementSpeed = dashSpeed;
+        soundEffectManager.PlaySound(dashSound);
         playerAnimator.SetBool("IsDashing", true);
 
         yield return new WaitForSeconds(dashTime);

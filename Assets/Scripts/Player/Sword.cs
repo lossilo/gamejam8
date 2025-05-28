@@ -13,6 +13,7 @@ public class Sword : MonoBehaviour
     [SerializeField] private float swordAttackTime;
     [SerializeField] private float swordRetractTime;
     [SerializeField] private LayerMask attackableLayer;
+    [SerializeField] private AudioClip swordSound;
 
     private bool isMovingSword;
     private float setMoveTime;
@@ -20,11 +21,13 @@ public class Sword : MonoBehaviour
 
     private Collider2D swordCollider;
     private PlayerMovement playerMovement;
+    private SoundEffectManager soundEffectManager;
 
     private void Start()
     {
         swordCollider = GetComponent<Collider2D>();
         playerMovement = FindFirstObjectByType<PlayerMovement>();
+        soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
     }
 
     private void Update()
@@ -43,6 +46,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator UseSwordRoutine(float initialDirection)
     {
+        soundEffectManager.PlaySound(swordSound);
         playerMovement.MoveBlock = true;
         swordCollider.enabled = true;
         setMoveTime = swordAttackTime;

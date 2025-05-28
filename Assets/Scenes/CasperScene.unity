@@ -253,6 +253,51 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &24064411
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 24064413}
+  - component: {fileID: 24064412}
+  m_Layer: 0
+  m_Name: SoundEffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &24064412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24064411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e71728c59d70a194ba2b922ecacd4f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: 7748647633416893588, guid: 6f2dca119261c974fbaf53c98620cc69, type: 3}
+--- !u!4 &24064413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 24064411}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &126529777
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,6 +993,46 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5534136869221174303, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: switchAbilitySound
+      value: 
+      objectReference: {fileID: 8300000, guid: 613412728304e6f48b4bfd1fe1cadf30, type: 3}
+    - target: {fileID: 7998476897571445369, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: swordSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 69f462ca58f17f24399157c3cfa12be9, type: 3}
+    - target: {fileID: 8289936922970691124, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: dashSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 638ba6d7f718705409ad15917058a537, type: 3}
+    - target: {fileID: 8289936922970691124, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: jumpSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 638ba6d7f718705409ad15917058a537, type: 3}
+    - target: {fileID: 8289936922970691124, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: moveSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 48e455468cf2f274ba347342e5557d01, type: 3}
+    - target: {fileID: 8499183664009775769, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499183664009775769, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499183664009775769, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 24064411}
+    - target: {fileID: 8499183664009775769, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8499183664009775769, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: PlayerAbilities, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1062,3 +1147,4 @@ SceneRoots:
   - {fileID: 2490260429393343346}
   - {fileID: 126529780}
   - {fileID: 4821023718418174354}
+  - {fileID: 24064413}

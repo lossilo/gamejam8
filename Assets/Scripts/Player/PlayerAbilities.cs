@@ -2,23 +2,28 @@ using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
+    [SerializeField] private AudioClip switchAbilitySound;
+
     private Abilities currentAbility;
 
     private PlayerMovement playerMovement;
     private PlayerTools playerTools;
     private AbilityDisplay abilityDisplay;
+    private SoundEffectManager soundEffectManager;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerTools = GetComponent<PlayerTools>();
         abilityDisplay = FindFirstObjectByType<AbilityDisplay>();
+        soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
 
         abilityDisplay.ChangeAbility(0);
     }
 
     public void ChangeAbility()
     {
+        soundEffectManager.PlaySound(switchAbilitySound);
         currentAbility++;
 
         if (currentAbility == Abilities.Total)
