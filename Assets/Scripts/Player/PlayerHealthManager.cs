@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class PlayerHealthManager : MonoBehaviour
 {
+    [SerializeField] GameObject[] healthIndicators;
     [SerializeField] int playerHealth = 3;
 
     [SerializeField] DeathScreen deathScreen;
@@ -14,6 +15,11 @@ public class PlayerHealthManager : MonoBehaviour
 
     private void Update()
     {
+        for (int i = 0; i < healthIndicators.Length; i++)
+        {
+            healthIndicators[i].SetActive(i < playerHealth);
+        }
+
         if (playerHealth <= 0)
         {
             PlayerDie();

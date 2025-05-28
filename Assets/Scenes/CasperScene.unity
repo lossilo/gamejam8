@@ -337,6 +337,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3604340944454073839, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
   m_PrefabInstance: {fileID: 2490260429393343346}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1007078581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -6573122098141137734, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+  m_PrefabInstance: {fileID: 2490260429393343346}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: be1db0e3cb436324b8b4a4967debe072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1043411894
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +781,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1131251521513300874, guid: 3cf7f566ee45960409ad1a30202961a2, type: 3}
+      propertyPath: playerHealth
+      value: 
+      objectReference: {fileID: 1007078581}
     - target: {fileID: 3548810336485277511, guid: 3cf7f566ee45960409ad1a30202961a2, type: 3}
       propertyPath: m_Name
       value: Enemy1
@@ -1079,6 +1094,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -6573122098141137734, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: 'healthIndicators.Array.data[0]'
+      value: 
+      objectReference: {fileID: 4821023718418174357}
+    - target: {fileID: -6573122098141137734, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: 'healthIndicators.Array.data[1]'
+      value: 
+      objectReference: {fileID: 4821023718418174356}
+    - target: {fileID: -6573122098141137734, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
+      propertyPath: 'healthIndicators.Array.data[2]'
+      value: 
+      objectReference: {fileID: 4821023718418174355}
     - target: {fileID: 3374958274740009246, guid: 1a64c60ed7b51514ca8eebf4784bdc04, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1225,6 +1252,21 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 77cf6a7b957d8d143beeab73b7cd5441, type: 3}
+--- !u!1 &4821023718418174355 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 425539280827730923, guid: 77cf6a7b957d8d143beeab73b7cd5441, type: 3}
+  m_PrefabInstance: {fileID: 4821023718418174354}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4821023718418174356 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8001424810416174310, guid: 77cf6a7b957d8d143beeab73b7cd5441, type: 3}
+  m_PrefabInstance: {fileID: 4821023718418174354}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4821023718418174357 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5569534108752838591, guid: 77cf6a7b957d8d143beeab73b7cd5441, type: 3}
+  m_PrefabInstance: {fileID: 4821023718418174354}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7806684016108962539
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -107,7 +107,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1131251521513300874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -129,6 +129,7 @@ MonoBehaviour:
   knockBackMultiplier: 0.8
   knockBackDuration: 0.5
   gettingKnocked: 0
+  playerHealth: {fileID: 0}
   enemyHolder: {fileID: 3548810336485277511}
   enemyRb: {fileID: 6152385193481411420}
 --- !u!1 &3548810336485277511

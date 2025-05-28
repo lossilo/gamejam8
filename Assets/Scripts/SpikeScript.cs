@@ -3,13 +3,18 @@ using UnityEngine;
 
 public class SpikeScript : MonoBehaviour
 {
+    [SerializeField] int spikeDamage = 1;
 
-    //int spikeDamage = 1; 
-    
+    PlayerHealthManager healthManager;
+
+    private void Start()
+    {
+        healthManager = FindFirstObjectByType<PlayerHealthManager>();
+    }
+
     void DealDamage()
     {
-        //health = health - spikeDamage; 
-        Debug.Log("Du dör din gris"); 
+        healthManager.TakeDamage(spikeDamage);
     }
     
     private void OnCollisionEnter2D(Collision2D Other)
