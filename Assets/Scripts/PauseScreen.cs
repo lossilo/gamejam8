@@ -27,7 +27,7 @@ public class PauseScreen : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape) && deathScreen.dead == false)
         {
             gamePaused = !gamePaused;
-            pauseScreen.SetActive(!gamePaused);
+            pauseScreen.SetActive(gamePaused);
         }
     }
 

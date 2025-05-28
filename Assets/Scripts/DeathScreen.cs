@@ -11,6 +11,7 @@ public class DeathScreen : MonoBehaviour
     private void Start()
     {
         deathScreen.SetActive(false);
+        dead = false;
     }
 
     private void Update()
