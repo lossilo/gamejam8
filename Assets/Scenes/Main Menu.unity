@@ -1341,7 +1341,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: The Name Of The Game
+  m_text: Protocol 1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3a50e08f760354d4db142f2c6ca1b440, type: 2}
   m_sharedMaterial: {fileID: -5241366141852344554, guid: 3a50e08f760354d4db142f2c6ca1b440, type: 2}
@@ -1368,8 +1368,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 130
-  m_fontSizeBase: 130
+  m_fontSize: 150
+  m_fontSizeBase: 150
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
