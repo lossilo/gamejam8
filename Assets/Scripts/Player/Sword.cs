@@ -5,10 +5,15 @@ using UnityEngine.Rendering;
 
 public class Sword : MonoBehaviour
 {
+    [SerializeField] int damageToEnemy;
+
+    [Space]
+
     [SerializeField] private float swordMoveDistance;
     [SerializeField] private float swordAttackTime;
     [SerializeField] private float swordRetractTime;
     [SerializeField] private LayerMask attackableLayer;
+    [SerializeField] private AudioClip swordSound;
 
     private bool isMovingSword;
     private float setMoveTime;
@@ -16,11 +21,13 @@ public class Sword : MonoBehaviour
 
     private Collider2D swordCollider;
     private PlayerMovement playerMovement;
+    private SoundEffectManager soundEffectManager;
 
     private void Start()
     {
         swordCollider = GetComponent<Collider2D>();
         playerMovement = FindFirstObjectByType<PlayerMovement>();
+        soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
     }
 
     private void Update()
@@ -39,6 +46,7 @@ public class Sword : MonoBehaviour
 
     private IEnumerator UseSwordRoutine(float initialDirection)
     {
+        soundEffectManager.PlaySound(swordSound);
         playerMovement.MoveBlock = true;
         swordCollider.enabled = true;
         setMoveTime = swordAttackTime;
@@ -55,13 +63,14 @@ public class Sword : MonoBehaviour
         playerMovement.MoveBlock = false;
         isMovingSword = false;
         swordCollider.enabled = false;
+        transform.localPosition = Vector3.zero;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (((1 << other.gameObject.layer) & attackableLayer) != 0)
         {
-            Debug.Log("Kapow");
+            other.GetComponent<Enemy>().Damage(damageToEnemy);
         }
     }
 }

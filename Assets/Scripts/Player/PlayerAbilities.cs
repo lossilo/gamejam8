@@ -1,39 +1,36 @@
-using TMPro;
 using UnityEngine;
 
 public class PlayerAbilities : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI tempAbilityDisplay;
+    [SerializeField] private AudioClip switchAbilitySound;
 
     private Abilities currentAbility;
 
     private PlayerMovement playerMovement;
     private PlayerTools playerTools;
+    private AbilityDisplay abilityDisplay;
+    private SoundEffectManager soundEffectManager;
 
     private void Start()
     {
         playerMovement = GetComponent<PlayerMovement>();
         playerTools = GetComponent<PlayerTools>();
-    }
+        abilityDisplay = FindFirstObjectByType<AbilityDisplay>();
+        soundEffectManager = FindFirstObjectByType<SoundEffectManager>();
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            UseAbility();
-        }
+        abilityDisplay.ChangeAbility(0);
     }
 
     public void ChangeAbility()
     {
+        soundEffectManager.PlaySound(switchAbilitySound);
         currentAbility++;
 
         if (currentAbility == Abilities.Total)
         {
             currentAbility = 0;
         }
-
-        tempAbilityDisplay.text = "Current Ability: " + currentAbility;
+        abilityDisplay.ChangeAbility((int)currentAbility);
     }
 
     public void UseAbility()
@@ -52,8 +49,6 @@ public class PlayerAbilities : MonoBehaviour
             case Abilities.Sword:
                 playerTools.SwordAttack();
                 break;
-            case Abilities.WallBreak:
-                break;
         }
     }
 
@@ -63,7 +58,6 @@ public class PlayerAbilities : MonoBehaviour
         Dash,
         GroundPound,
         Sword,
-        WallBreak,
         Total
     }
 }
