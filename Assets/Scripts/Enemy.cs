@@ -6,7 +6,7 @@ public class EnemyScript : MonoBehaviour
 
     [Header("Enemy Stats")]
     [SerializeField] float enemySpeed;
-    [SerializeField] int enemyDamage;
+    [SerializeField] int enemyDamage = 1;
     [SerializeField] int enemyHealth;
 
     [Header("Patrol")]
@@ -24,7 +24,7 @@ public class EnemyScript : MonoBehaviour
     [SerializeField] bool gettingKnocked;
 
     [Header("Other")]
-    //[SerializeField] PlayerScript playerScript;
+    [SerializeField] PlayerHealthManager playerHealth;
     [SerializeField] GameObject enemyHolder;
     [SerializeField] Rigidbody2D enemyRb;
 
@@ -105,7 +105,7 @@ public class EnemyScript : MonoBehaviour
     }
     void DamagePlayer()
     {
-        //playerScript.health = playerScript.health - enemyDamage;
+        playerHealth.TakeDamage(enemyDamage);
     }
 
     public void Test(int test)
@@ -114,7 +114,7 @@ public class EnemyScript : MonoBehaviour
     }
     public IEnumerator DamageEnemy(int damageTaken)
     {
-        enemyHealth = enemyHealth - damageTaken;
+        enemyHealth -= damageTaken;
 
         gettingKnocked = true;
         stop = true;
